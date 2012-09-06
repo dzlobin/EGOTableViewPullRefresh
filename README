@@ -1,0 +1,9 @@
+This EGOTableViewPullRefresh fork is an aggregate of my own improvements and tweaks as well as handpicked pull requests submitted but not yet merged into the original repo.
+
+Some changes:
+- converted to arc (from original fork)
+- localized text
+- fixed timestamp formatting
+- optimized timestamp NSDateFormatter performance by making it static
+- added custom initializer for easier skinning
+- removed NSUserDefaults update, the app model should not be touched in a view componenet
