@@ -6,4 +6,4 @@ Some changes:
 - fixed timestamp formatting
 - optimized timestamp NSDateFormatter performance by making it static
 - added custom initializer for easier skinning
-- removed NSUserDefaults update, the app model should not be touched in a view componenet
+- removed NSUserDefaults update, the app model should not be touched in a view component
