@@ -26,8 +26,6 @@
 
 #import "EGORefreshTableHeaderView.h"
 
-
-#define TEXT_COLOR	 [UIColor colorWithRed:87.0/255.0 green:108.0/255.0 blue:137.0/255.0 alpha:1.0]
 #define FLIP_ANIMATION_DURATION 0.18f
 
 
@@ -40,17 +38,43 @@
 @synthesize delegate=_delegate;
 
 
-- (id)initWithFrame:(CGRect)frame {
+- (id)initWithFrame:(CGRect)frame
+     arrowImageName:(NSString *)arrow
+          textColor:(UIColor *)textColor
+        shadowColor:(UIColor *)shadowColor
+    backgroundColor:(UIColor *)backgroundColor {
     if (self = [super initWithFrame:frame]) {
-		
+        
 		self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-		self.backgroundColor = [UIColor colorWithRed:226.0/255.0 green:231.0/255.0 blue:237.0/255.0 alpha:1.0];
+        
+        if(backgroundColor)
+        {
+            self.backgroundColor = backgroundColor;
+        }
+        else
+        {
+            self.backgroundColor = [EGORefreshTableHeaderView defaultBackgroundColor];
+        }
 
 		UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, frame.size.height - 30.0f, self.frame.size.width, 20.0f)];
 		label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		label.font = [UIFont systemFontOfSize:12.0f];
-		label.textColor = TEXT_COLOR;
-		label.shadowColor = [UIColor colorWithWhite:0.9f alpha:1.0f];
+        if(textColor)
+        {
+            label.textColor = textColor;
+        }
+        else
+        {
+            label.textColor = [EGORefreshTableHeaderView defaultTextColor];
+        }
+        if(shadowColor)
+        {
+            label.shadowColor = shadowColor;
+        }
+        else
+        {
+            label.shadowColor = [EGORefreshTableHeaderView defaultShadowColor];
+        }
 		label.shadowOffset = CGSizeMake(0.0f, 1.0f);
 		label.backgroundColor = [UIColor clearColor];
 		label.textAlignment = UITextAlignmentCenter;
@@ -60,8 +84,22 @@
 		label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, frame.size.height - 48.0f, self.frame.size.width, 20.0f)];
 		label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		label.font = [UIFont boldSystemFontOfSize:13.0f];
-		label.textColor = TEXT_COLOR;
-		label.shadowColor = [UIColor colorWithWhite:0.9f alpha:1.0f];
+        if(textColor)
+        {
+            label.textColor = textColor;
+        }
+        else
+        {
+            label.textColor = [EGORefreshTableHeaderView defaultTextColor];
+        }
+        if(shadowColor)
+        {
+            label.shadowColor = shadowColor;
+        }
+        else
+        {
+            label.shadowColor = [EGORefreshTableHeaderView defaultShadowColor];
+        }
 		label.shadowOffset = CGSizeMake(0.0f, 1.0f);
 		label.backgroundColor = [UIColor clearColor];
 		label.textAlignment = UITextAlignmentCenter;
@@ -71,7 +109,14 @@
 		CALayer *layer = [CALayer layer];
 		layer.frame = CGRectMake(25.0f, frame.size.height - 65.0f, 30.0f, 55.0f);
 		layer.contentsGravity = kCAGravityResizeAspect;
-		layer.contents = (id)[UIImage imageNamed:@"blueArrow.png"].CGImage;
+        if(arrow)
+        {
+            layer.contents = (id)[UIImage imageNamed:arrow].CGImage;
+        }
+        else
+        {
+            layer.contents = (id)[UIImage imageNamed:[EGORefreshTableHeaderView defaultArrowImageName]].CGImage;
+        }
 		
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 40000
 		if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]) {
@@ -96,6 +141,34 @@
 	
 }
 
+- (id)initWithFrame:(CGRect)frame
+{
+    return [self initWithFrame:frame
+                arrowImageName:[EGORefreshTableHeaderView defaultArrowImageName]
+                     textColor:[EGORefreshTableHeaderView defaultTextColor]
+                   shadowColor:[EGORefreshTableHeaderView defaultShadowColor]
+               backgroundColor:[EGORefreshTableHeaderView defaultBackgroundColor]];
+}
+
+
+
+#pragma mark - Getters
+
++ (NSString *)defaultArrowImageName {
+    return @"blueArrow.png";
+}
+
++ (UIColor *)defaultTextColor {
+    return [UIColor colorWithRed:87.0/255.0 green:108.0/255.0 blue:137.0/255.0 alpha:1.0];
+}
+
++ (UIColor *)defaultShadowColor {
+    return [UIColor colorWithWhite:0.9f alpha:1.0f];
+}
+
++ (UIColor *)defaultBackgroundColor {
+    return [UIColor colorWithRed:226.0/255.0 green:231.0/255.0 blue:237.0/255.0 alpha:1.0];
+}
 
 #pragma mark -
 #pragma mark Setters
