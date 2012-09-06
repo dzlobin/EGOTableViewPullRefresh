@@ -55,7 +55,7 @@
         {
             self.backgroundColor = [EGORefreshTableHeaderView defaultBackgroundColor];
         }
-
+        
 		UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, frame.size.height - 30.0f, self.frame.size.width, 20.0f)];
 		label.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		label.font = [UIFont systemFontOfSize:12.0f];
@@ -159,7 +159,7 @@
 }
 
 + (UIColor *)defaultTextColor {
-    return [UIColor colorWithRed:87.0/255.0 green:108.0/255.0 blue:137.0/255.0 alpha:1.0];
+    return [UIColor colorWithRed:87.0f/255.0f green:108.0f/255.0f blue:137.0f/255.0f alpha:1.0f];
 }
 
 + (UIColor *)defaultShadowColor {
@@ -167,7 +167,7 @@
 }
 
 + (UIColor *)defaultBackgroundColor {
-    return [UIColor colorWithRed:226.0/255.0 green:231.0/255.0 blue:237.0/255.0 alpha:1.0];
+    return [UIColor colorWithRed:226.0f/255.0f green:231.0f/255.0f blue:237.0f/255.0f alpha:1.0f];
 }
 
 #pragma mark -
@@ -178,21 +178,25 @@
 	if ([_delegate respondsToSelector:@selector(egoRefreshTableHeaderDataSourceLastUpdated:)]) {
 		
 		NSDate *date = [_delegate egoRefreshTableHeaderDataSourceLastUpdated:self];
-		
-		NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-		[formatter setAMSymbol:@"AM"];
-		[formatter setPMSymbol:@"PM"];
-		[formatter setDateFormat:@"MM/dd/yyyy hh:mm a"];
-        _lastUpdatedLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Last updated: %@", nil), [formatter stringFromDate:date]];
-		[[NSUserDefaults standardUserDefaults] setObject:_lastUpdatedLabel.text forKey:@"EGORefreshTableView_LastRefresh"];
-		[[NSUserDefaults standardUserDefaults] synchronize];
+        if(date)
+		{
+            static NSDateFormatter *formatter = nil;
+            if(!formatter)
+            {
+                formatter = [[NSDateFormatter alloc] init];
+                [formatter setAMSymbol:@"AM"];
+                [formatter setPMSymbol:@"PM"];
+                [formatter setDateFormat:@"MM/dd/yyyy hh:mm a"];
+            }
+            _lastUpdatedLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Last updated: %@", nil), [formatter stringFromDate:date]];
+        }
 		
 	} else {
 		
 		_lastUpdatedLabel.text = nil;
 		
 	}
-
+    
 }
 
 - (void)setState:(EGOPullRefreshState)aState{
@@ -219,7 +223,7 @@
 			_statusLabel.text = NSLocalizedString(@"Pull down to refresh...", @"Pull down to refresh status");
 			[_activityView stopAnimating];
 			[CATransaction begin];
-			[CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions]; 
+			[CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
 			_arrowImage.hidden = NO;
 			_arrowImage.transform = CATransform3DIdentity;
 			[CATransaction commit];
@@ -232,7 +236,7 @@
 			_statusLabel.text = NSLocalizedString(@"Loading...", @"Loading Status");
 			[_activityView startAnimating];
 			[CATransaction begin];
-			[CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions]; 
+			[CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
 			_arrowImage.hidden = YES;
 			[CATransaction commit];
 			
@@ -248,7 +252,7 @@
 #pragma mark -
 #pragma mark ScrollView Methods
 
-- (void)egoRefreshScrollViewDidScroll:(UIScrollView *)scrollView {	
+- (void)egoRefreshScrollViewDidScroll:(UIScrollView *)scrollView {
 	
 	if (_state == EGOOPullRefreshLoading) {
 		
@@ -300,7 +304,7 @@
 	
 }
 
-- (void)egoRefreshScrollViewDataSourceDidFinishedLoading:(UIScrollView *)scrollView {	
+- (void)egoRefreshScrollViewDataSourceDidFinishedLoading:(UIScrollView *)scrollView {
 	
 	[UIView beginAnimations:nil context:NULL];
 	[UIView setAnimationDuration:.3];
@@ -308,7 +312,7 @@
 	[UIView commitAnimations];
 	
 	[self setState:EGOOPullRefreshNormal];
-
+    
 }
 
 
