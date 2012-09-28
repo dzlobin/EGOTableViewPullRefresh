@@ -155,19 +155,19 @@
 #pragma mark - Getters
 
 + (NSString *)defaultArrowImageName {
-    return @"blueArrow.png";
+    return @"whiteArrow.png";
 }
 
 + (UIColor *)defaultTextColor {
-    return [UIColor colorWithRed:87.0f/255.0f green:108.0f/255.0f blue:137.0f/255.0f alpha:1.0f];
+    return [UIColor colorWithRed:172.0f/255.0f green:172.0f/255.0f blue:172.0f/255.0f alpha:1.0f];
 }
 
 + (UIColor *)defaultShadowColor {
-    return [UIColor colorWithWhite:0.9f alpha:1.0f];
+    return [UIColor colorWithRed:0.0f/255.0f green:0.0f/255.0f blue:0.0f/255.0f alpha:1.0f];
 }
 
 + (UIColor *)defaultBackgroundColor {
-    return [UIColor colorWithRed:226.0f/255.0f green:231.0f/255.0f blue:237.0f/255.0f alpha:1.0f];
+    return [UIColor colorWithRed:226.0f/255.0f green:231.0f/255.0f blue:237.0f/255.0f alpha:0.0f];
 }
 
 #pragma mark -
